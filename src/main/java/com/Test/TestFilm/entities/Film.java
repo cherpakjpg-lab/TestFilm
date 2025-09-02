@@ -1,5 +1,9 @@
 package com.Test.TestFilm.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -11,35 +15,38 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table(name = "Film")
+@Table(name = "film")
 public class Film {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Film_ID", nullable = false)
+    @Column(name = "film_id", nullable = false)
     private Integer id;
 
     @Size(max = 100)
-    @NotNull
-    @Column(name = "Film_Name", nullable = false, length = 100)
+
+    @Column(name = "film_name", nullable = false, length = 100)
     private String filmName;
 
-    @NotNull
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "Director_ID", nullable = false)
+    @JoinColumn(name = "director_id", nullable = false)
+
     private Director director;
 
-    @NotNull
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "Actor_ID", nullable = false)
+    @JoinColumn(name = "actor_id", nullable = false)
+    @JsonBackReference
     private Actor actor;
 
-    @NotNull
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "Genre_ID", nullable = false)
+    @JoinColumn(name = "genre_id", nullable = false)
+    @JsonBackReference
     private Genre genre;
 
-    @NotNull
-    @Column(name = "ReleaseDate", nullable = false)
+
+    @Column(name = "release_date", nullable = false)
     private LocalDate releaseDate;
 
 }

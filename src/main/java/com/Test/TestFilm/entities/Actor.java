@@ -1,5 +1,8 @@
 package com.Test.TestFilm.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -12,24 +15,25 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "Actor")
+@Table(name = "actor")
 public class Actor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "Actor_ID", nullable = false)
+    @Column(name = "actor_id", nullable = false)
     private Integer id;
 
     @Size(max = 100)
     @NotNull
-    @Column(name = "Actor_First_Name", nullable = false, length = 100)
+    @Column(name = "actor_first_name", nullable = false, length = 100)
     private String actorFirstName;
 
     @Size(max = 100)
     @NotNull
-    @Column(name = "Actor_Last_Name", nullable = false, length = 100)
+    @Column(name = "actor_last_name", nullable = false, length = 100)
     private String actorLastName;
 
     @OneToMany(mappedBy = "actor")
+    @JsonManagedReference
     private Set<Film> films = new LinkedHashSet<>();
 
 }
